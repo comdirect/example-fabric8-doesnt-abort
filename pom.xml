@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.foo.app</groupId>
+    <artifactId>testapp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.foo.app.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <!-- prepare docker file -->
+                    <execution>
+                        <id>prepare-dockerfile</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/maven</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/docker</directory>
+                                    <include>Dockerfile</include>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>**/*.jar</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>fabric8</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!--
+                            Code: https://github.com/fabric8io/docker-maven-plugin
+                            Docs: http://dmp.fabric8.io
+                        -->
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.38.0</version>
+                        <configuration>
+                            <!--
+                                dockerHost:
+                                The URL of the Docker Daemon. If this configuration option is not given, then the
+                                optional <machine> configuration section is consulted.
+                            -->
+                            <dockerHost>http://localhost:8880</dockerHost>
+                            <!--
+                               Specify whether images should be pull when looking for base images while building or images for
+                               starting. Defaults to IfNotPresent.
+                            -->
+                            <!--imagePullPolicy>Always</imagePullPolicy-->
+                            <verbose>all</verbose>
+                            <!--
+                                Disable coloring as this would print some lines dark on dark, which is not readable.
+                                As an alternative, use Maven parameter -B.
+                            -->
+                            <useColor>false</useColor>
+                            <images>
+                                <image>
+                                    <name>%a:%v</name>
+                                    <!--name>${project.artifactId}:${project.version}</name-->
+                                    <build>
+                                        <dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile>
+                                        <contextDir>${project.build.directory}/maven</contextDir>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>spotify</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Code: https://github.com/spotify/docker-maven-plugin -->
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>1.2.2</version>
+                        <configuration>
+                            <dockerHost>http://localhost:8880</dockerHost>
+                            <!--serverId>docker-build</serverId-->
+                            <imageName>${project.artifactId}:${project.version}</imageName>
+                            <!--registryUrl>${docker-develop.registry}</registryUrl-->
+                            <dockerDirectory>${project.build.directory}/maven</dockerDirectory>
+                            <!--pullOnBuild>true</pullOnBuild-->
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
+
