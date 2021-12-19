@@ -1,0 +1,78 @@
+$ cat spotify_ok.log 
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.foo.app:testapp:jar:1.0.0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-resources-plugin is missing. @ line 29, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ------------------------< com.foo.app:testapp >-------------------------
+[INFO] Building testapp 1.0.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ testapp ---
+[INFO] Deleting /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ testapp ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ testapp ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ testapp ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.2.0:jar (default-jar) @ testapp ---
+[INFO] Building jar: /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/testapp-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (prepare-dockerfile) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- docker-maven-plugin:1.2.2:build (build-image) @ testapp ---
+[INFO] Using authentication suppliers: [ConfigFileRegistryAuthSupplier]
+[INFO] Copying /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/maven/testapp-1.0.0-SNAPSHOT.jar -> /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/docker/testapp-1.0.0-SNAPSHOT.jar
+[INFO] Copying /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/maven/Dockerfile -> /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/docker/Dockerfile
+[INFO] Building image testapp:1.0.0-SNAPSHOT
+STEP 1/3: FROM openjdk:8-jdk-alpine
+STEP 2/3: COPY *.jar app.jar
+STEP 3/3: ENTRYPOINT ["java", "-jar", "/app.jar"]
+COMMIT testapp:1.0.0-SNAPSHOT
+Getting image source signatures
+Copying blob sha256:f1b5933fe4b5f49bbe8258745cf396afe07e625bdab3168e364daf7c956b6b81
+Copying blob sha256:9b9b7f3d56a01e3d9076874990c62e7a516cc4032f784f421574d06b18ef9aa4
+Copying blob sha256:ceaf9e1ebef5f9eaa707a838848a3c13800fcf32d7757be10d4b08fb85f1bc8a
+Copying blob sha256:b566a5d3701ea7ca338186be31a149e72557e5c9257e05937b3ca6f5e11032cf
+Copying config sha256:ad6bdff094f28d46aaa8a505926d7b6e7eb3039c9560756edf164078f941a406
+Writing manifest to image destination
+Storing signatures
+--> ad6bdff094f
+Successfully tagged localhost/testapp:1.0.0-SNAPSHOT
+ad6bdff094f28d46aaa8a505926d7b6e7eb3039c9560756edf164078f941a406
+Successfully built ad6bdff094f2
+Successfully tagged testapp:1.0.0-SNAPSHOT
+[INFO] Built testapp:1.0.0-SNAPSHOT
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ testapp ---
+[INFO] Installing /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/testapp-1.0.0-SNAPSHOT.jar to /home/jh/.m2/repository/com/foo/app/testapp/1.0.0-SNAPSHOT/testapp-1.0.0-SNAPSHOT.jar
+[INFO] Installing /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/pom.xml to /home/jh/.m2/repository/com/foo/app/testapp/1.0.0-SNAPSHOT/testapp-1.0.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.535 s
+[INFO] Finished at: 2021-12-18T14:28:34+01:00
+[INFO] ------------------------------------------------------------------------

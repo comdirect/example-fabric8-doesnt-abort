@@ -1,0 +1,61 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.foo.app:testapp:jar:1.0.0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-resources-plugin is missing. @ line 29, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ------------------------< com.foo.app:testapp >-------------------------
+[INFO] Building testapp 1.0.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ testapp ---
+[INFO] Deleting /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ testapp ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ testapp ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ testapp ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.2.0:jar (default-jar) @ testapp ---
+[INFO] Building jar: /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/testapp-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (prepare-dockerfile) @ testapp ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- docker-maven-plugin:0.38.0:build (build-image) @ testapp ---
+[INFO] Building tar: /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/docker/testapp/1.0.0-SNAPSHOT/tmp/docker-build.tar
+[INFO] DOCKER> [testapp:1.0.0-SNAPSHOT]: Created docker-build.tar in 50 milliseconds
+[DEBUG] DOCKER> Build args set {}
+[DEBUG] DOCKER> Build args set {}
+[INFO] DOCKER> POST to http://localhost:8880/v1.40/build?dockerfile=Dockerfile&forcerm=1&nocache=0&squash=0&t=testapp%3A1.0.0-SNAPSHOT with contents of file /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/docker/testapp/1.0.0-SNAPSHOT/tmp/docker-build.tar
+[INFO] DOCKER> [testapp:1.0.0-SNAPSHOT]: Built image sha256:eed79
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ testapp ---
+[INFO] Installing /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/target/testapp-1.0.0-SNAPSHOT.jar to /home/jh/.m2/repository/com/foo/app/testapp/1.0.0-SNAPSHOT/testapp-1.0.0-SNAPSHOT.jar
+[INFO] Installing /home/jh/2021-12-15_fabric8/example-project-with-spotify-and-fabric8/pom.xml to /home/jh/.m2/repository/com/foo/app/testapp/1.0.0-SNAPSHOT/testapp-1.0.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.146 s
+[INFO] Finished at: 2021-12-18T14:36:23+01:00
+[INFO] ------------------------------------------------------------------------
